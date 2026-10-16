@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "CyberGuard MVP",
+  "version": "0.1.0",
+  "description": "Cliente leve (UI) que consome a API Python local para análise de segurança.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CyberGuard"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "history",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "http://127.0.0.1:8000/*"
+  ]
+}

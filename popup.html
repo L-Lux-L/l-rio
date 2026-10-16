@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>CyberGuard MVP</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1>🛡️ CyberGuard <span class="badge">MVP</span></h1>
+    <div id="trial-status" class="trial-status">Verificando trial...</div>
+  </header>
+
+  <section class="mode-selector">
+    <label for="mode-select">Modo de exibição:</label>
+    <select id="mode-select">
+      <option value="amador">Visão Amador</option>
+      <option value="profissional">Visão Profissional</option>
+    </select>
+  </section>
+
+  <section class="actions">
+    <button id="btn-analyze-site">Analisar Site Atual</button>
+    <button id="btn-analyze-history">Analisar Histórico (5 itens)</button>
+  </section>
+
+  <section id="loading" class="hidden">Analisando...</section>
+
+  <section id="error-box" class="error hidden"></section>
+
+  <section id="result" class="result"></section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
