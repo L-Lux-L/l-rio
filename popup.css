@@ -38,6 +38,78 @@ header h1 {
   font-weight: bold;
 }
 
+.account-status {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.account-status.pro {
+  background: #fce7f3;
+  color: #db2777;
+}
+
+.account-status.dev {
+  background: linear-gradient(135deg, #db2777, #6b21a8);
+  color: #fff;
+}
+
+.full-panel-btn {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ec4899, #db2777);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.full-panel-btn:hover {
+  filter: brightness(1.05);
+}
+
+.login-details {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.login-details summary {
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.login-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-mini input {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 12px;
+}
+
+.login-mini button {
+  padding: 6px;
+  font-size: 12px;
+}
+
+.mini-login-error {
+  color: #f87171;
+  font-size: 11px;
+}
+
 .mode-selector {
   margin-bottom: 10px;
   display: flex;

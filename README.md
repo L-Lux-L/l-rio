@@ -44,7 +44,53 @@ execução, marcando o início do trial de 7 dias (mock).
    - **Analisar Site Atual** → analisa a URL da aba ativa
    - **Analisar Histórico** → envia os 5 últimos itens do histórico
 
-## Observações de segurança do MVP
+## Fase 2 — RBAC, Dashboard Web e Conta Dev
+
+Novos arquivos:
+```
+backend/app.py            (atualizado: RBAC, /api/login, /api/profile, mount /dashboard)
+backend/requirements.txt  (atualizado: + email-validator)
+extension/popup.html      (atualizado: botão "Painel Completo" + mini-login)
+extension/popup.css       (atualizado: estilos novos)
+extension/popup.js        (atualizado: status de conta + login)
+webapp/dashboard.html     (novo: aplicação web do SaaS)
+webapp/dashboard.css      (novo: paleta rosa/branco)
+webapp/dashboard.js       (novo: login, perfil Pro, overlay de bloqueio)
+```
+
+O dashboard é servido pelo próprio backend Python em:
+`http://localhost:8000/dashboard/`
+
+### Conta Dev (mock, permanente)
+- E-mail: `dahoraluisgabriel@gmail.com`
+- Senha: `2l3u8i6s070711`
+- Ao logar com essas credenciais, o backend concede automaticamente
+  `role="developer"`, que ignora o estado do trial e libera todos os
+  recursos Pro (ver comentários `>>> SUPER-PERMISSÃO ... <<<` em `app.py`,
+  função `_resolve_access`).
+
+Conta de assinante mock adicional, para testar o fluxo "subscriber" sem
+usar a conta dev: `assinante@teste.com` / `assinante123`.
+
+**⚠️ Importante:** essas credenciais estão hardcoded em `app.py` apenas
+para o MVP local. Antes de qualquer deploy público, versionamento em
+repositório compartilhado ou uso em produção:
+- Mova e-mail/senha para variáveis de ambiente (`CYBERGUARD_DEV_EMAIL` /
+  `CYBERGUARD_DEV_PASSWORD`, já suportadas no código) ou um secrets manager.
+- Troque essa senha por uma nova, gerada aleatoriamente, e nunca a
+  reutilize em outro sistema.
+- Substitua o "banco" em memória (`USERS_DB`, `TOKENS`) por um banco real
+  e tokens JWT assinados com expiração adequada.
+
+### O que é Trial vs Pro (subscriber/developer) agora
+- **Trial**: análise básica de site, métricas simplificadas, histórico
+  limitado a 5 URLs por chamada, sem acesso a `/api/profile` (403).
+- **Pro (subscriber/developer)**: relatório profissional completo
+  (`pro_insights`), análise de histórico sem limite de 5 itens, acesso à
+  aba de Perfil no dashboard, e `developer` ainda ignora o contador do
+  trial completamente.
+
+### Observações de segurança do MVP
 
 - CORS está aberto (`allow_origins=["*"]`) apenas para facilitar o teste
   local. Em produção, restrinja para o ID real da extensão.

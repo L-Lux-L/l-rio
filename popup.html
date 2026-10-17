@@ -9,6 +9,7 @@
   <header>
     <h1>🛡️ CyberGuard <span class="badge">MVP</span></h1>
     <div id="trial-status" class="trial-status">Verificando trial...</div>
+    <div id="account-status" class="account-status hidden"></div>
   </header>
 
   <section class="mode-selector">
@@ -19,10 +20,22 @@
     </select>
   </section>
 
+  <button id="btn-full-panel" class="full-panel-btn">🚀 Painel Completo</button>
+
   <section class="actions">
     <button id="btn-analyze-site">Analisar Site Atual</button>
     <button id="btn-analyze-history">Analisar Histórico (5 itens)</button>
   </section>
+
+  <details class="login-details">
+    <summary>Entrar (conta Dev / assinante)</summary>
+    <div class="login-mini">
+      <input id="mini-login-email" type="email" placeholder="e-mail" />
+      <input id="mini-login-password" type="password" placeholder="senha" />
+      <button id="btn-mini-login">Entrar</button>
+      <div id="mini-login-error" class="mini-login-error hidden"></div>
+    </div>
+  </details>
 
   <section id="loading" class="hidden">Analisando...</section>
 

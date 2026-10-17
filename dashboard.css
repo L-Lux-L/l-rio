@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --pink-600: #E91E63;
+  --pink-500: #FF4081;
+  --pink-100: #FDE7EF;
+  --plum-900: #3B0A24;
+  --ink: #241823;
+  --ink-soft: #6b5866;
+  --white: #FFFFFF;
+  --line: #F1DDE6;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(233, 30, 99, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  padding-bottom: 72px; /* espaço para bottom-nav em mobile */
+}
+
+h1, h2, h3 {
+  font-family: 'Sora', 'Inter', sans-serif;
+  margin: 0 0 8px 0;
+}
+
+/* ---------------- Topbar ---------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--plum-900);
+}
+
+.brand span { color: var(--pink-600); }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.badge-trial { background: var(--pink-100); color: var(--pink-600); }
+.badge-pro { background: var(--plum-900); color: #fff; }
+.badge-dev { background: linear-gradient(135deg, var(--pink-600), var(--plum-900)); color: #fff; }
+
+/* ---------------- Layout ---------------- */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+.view.hidden { display: none; }
+
+.hero {
+  padding: 28px 4px 20px;
+}
+
+.hero h1 {
+  font-size: 26px;
+  color: var(--plum-900);
+  line-height: 1.25;
+  max-width: 22ch;
+}
+
+.hero p {
+  color: var(--ink-soft);
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ---------------- Cards / botões ---------------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+}
+
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--pink-600);
+  color: #fff;
+}
+
+.btn-primary:hover { background: #d31857; }
+
+.btn-outline {
+  background: transparent;
+  color: var(--pink-600);
+  border: 1px solid var(--pink-500);
+}
+
+.btn-outline:hover { background: var(--pink-100); }
+
+.btn-block { width: 100%; margin-top: 10px; }
+
+.hidden { display: none !important; }
+
+/* ---------------- Análise ---------------- */
+.analyze-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#url-input {
+  flex: 1 1 220px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+#mode-select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.analyze-result { margin-top: 16px; font-size: 13px; }
+
+.report-line {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.report-line .finding-sev {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-right: 6px;
+}
+
+.sev-alta { background: #FCE4EC; color: #C2185B; }
+.sev-media { background: #FFF3E0; color: #B26A00; }
+.sev-baixa { background: var(--pink-100); color: var(--pink-600); }
+
+.upgrade-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--pink-100);
+  color: var(--pink-600);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---------------- Perfil ---------------- */
+.profile-wrapper { position: relative; }
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.profile-row .label { color: var(--ink-soft); }
+.profile-row .value { font-weight: 600; }
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.metric-box {
+  background: var(--pink-100);
+  border-radius: 10px;
+  padding: 14px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-num {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--plum-900);
+}
+
+.metric-box span:last-child {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* Overlay de bloqueio (trial tentando acessar Perfil) */
+.locked-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+}
+
+.locked-card {
+  text-align: center;
+  max-width: 280px;
+  padding: 20px;
+}
+
+.lock-icon { font-size: 28px; margin-bottom: 8px; }
+
+.locked-card h3 { font-size: 16px; color: var(--plum-900); }
+.locked-card p { font-size: 13px; color: var(--ink-soft); margin-bottom: 14px; }
+
+/* ---------------- Assinatura ---------------- */
+.subscribe-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.subscribe-info {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------------- Login ---------------- */
+.login-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.login-error {
+  margin-top: 10px;
+  color: #C2185B;
+  background: #FCE4EC;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* ---------------- Bottom nav ---------------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.nav-btn.active { color: var(--pink-600); }
+
+@media (min-width: 640px) {
+  .bottom-nav { display: none; }
+}

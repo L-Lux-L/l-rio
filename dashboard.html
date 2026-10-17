@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberGuard — Painel</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">🛡️ Cyber<span>Guard</span></div>
+    <nav class="topbar-actions">
+      <span id="account-badge" class="badge badge-trial">Carregando...</span>
+      <button id="btn-login-nav" class="btn btn-outline">Entrar</button>
+      <button id="btn-logout" class="btn btn-outline hidden">Sair</button>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- ================= HOME / ANÁLISE ================= -->
+    <section id="view-home" class="view">
+      <div class="hero">
+        <h1>Painel completo de segurança</h1>
+        <p>Analise sites, acompanhe métricas e gerencie sua conta em um só lugar.</p>
+      </div>
+
+      <div class="card analyze-card">
+        <label for="url-input">URL para analisar</label>
+        <div class="analyze-row">
+          <input id="url-input" type="text" placeholder="https://exemplo.com" />
+          <select id="mode-select">
+            <option value="amador">Amador</option>
+            <option value="profissional">Profissional</option>
+          </select>
+          <button id="btn-analyze" class="btn btn-primary">Analisar</button>
+        </div>
+        <div id="analyze-result" class="analyze-result"></div>
+      </div>
+    </section>
+
+    <!-- ================= PERFIL (Pro) ================= -->
+    <section id="view-profile" class="view hidden">
+      <h2>Meu Perfil</h2>
+
+      <div class="profile-wrapper">
+        <div id="profile-content" class="card profile-card">
+          <div class="profile-row">
+            <span class="label">E-mail</span>
+            <span id="profile-email" class="value">—</span>
+          </div>
+          <div class="profile-row">
+            <span class="label">Status da conta</span>
+            <span id="profile-role" class="value">—</span>
+          </div>
+          <div class="profile-row">
+            <span class="label">Trial</span>
+            <span id="profile-trial" class="value">—</span>
+          </div>
+
+          <h3>Métricas avançadas</h3>
+          <div id="profile-metrics" class="metrics-grid">
+            <div class="metric-box"><span class="metric-num" id="m-total">0</span><span>Sites analisados</span></div>
+            <div class="metric-box"><span class="metric-num" id="m-avg">0</span><span>Score médio</span></div>
+            <div class="metric-box"><span class="metric-num" id="m-risk">0</span><span>Alto risco</span></div>
+          </div>
+        </div>
+
+        <!-- Overlay exibido quando o usuário está em modo trial -->
+        <div id="profile-locked-overlay" class="locked-overlay hidden">
+          <div class="locked-card">
+            <div class="lock-icon">🔒</div>
+            <h3>Recurso exclusivo para assinantes</h3>
+            <p>Assine o CyberGuard Pro para desbloquear seu perfil completo, gráficos avançados e relatórios profissionais.</p>
+            <button id="btn-goto-subscribe" class="btn btn-primary">Virar Assinante</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ASSINATURA ================= -->
+    <section id="view-subscribe" class="view hidden">
+      <div class="card subscribe-card">
+        <h2>Torne-se um Assinante</h2>
+        <p>Desbloqueie perfil completo, gráficos avançados e relatórios profissionais.</p>
+        <div class="subscribe-options">
+          <button id="btn-subscribe-now" class="btn btn-primary btn-block">Assinar Agora</button>
+          <button id="btn-already-subscriber" class="btn btn-outline btn-block">Já sou Assinante</button>
+        </div>
+        <div id="subscribe-info" class="subscribe-info hidden"></div>
+      </div>
+    </section>
+
+    <!-- ================= LOGIN ================= -->
+    <section id="view-login" class="view hidden">
+      <div class="card login-card">
+        <h2>Entrar</h2>
+        <label for="login-email">E-mail</label>
+        <input id="login-email" type="email" placeholder="voce@exemplo.com" />
+        <label for="login-password">Senha</label>
+        <input id="login-password" type="password" placeholder="••••••••" />
+        <button id="btn-do-login" class="btn btn-primary btn-block">Entrar</button>
+        <div id="login-error" class="login-error hidden"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn" data-view="view-home">Início</button>
+    <button class="nav-btn" data-view="view-profile">Perfil</button>
+    <button class="nav-btn" data-view="view-subscribe">Assinatura</button>
+  </nav>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

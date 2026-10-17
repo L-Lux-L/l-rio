@@ -19,7 +19,16 @@ const els = {
   errorBox: document.getElementById("error-box"),
   result: document.getElementById("result"),
   trialStatus: document.getElementById("trial-status"),
+  accountStatus: document.getElementById("account-status"),
+  btnFullPanel: document.getElementById("btn-full-panel"),
+  miniLoginEmail: document.getElementById("mini-login-email"),
+  miniLoginPassword: document.getElementById("mini-login-password"),
+  btnMiniLogin: document.getElementById("btn-mini-login"),
+  miniLoginError: document.getElementById("mini-login-error"),
 };
+
+// Fase 2: URL da aplicação web (dashboard) servida pelo backend Python.
+const DASHBOARD_URL = `${API_BASE}/dashboard/`;
 
 // --------------------------------------------------------------------------
 // Utilitários de UI
@@ -55,10 +64,16 @@ function getSelectedMode() {
 // Comunicação com o backend Python
 // --------------------------------------------------------------------------
 
-async function apiPost(path, body) {
+async function apiPost(path, body, { auth = true } = {}) {
+  const headers = { "Content-Type": "application/json" };
+  if (auth) {
+    const token = await getStoredToken();
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+  }
+
   const response = await fetch(`${API_BASE}${path}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify(body),
   });
 
@@ -91,6 +106,25 @@ async function apiGet(path) {
 // --------------------------------------------------------------------------
 // Renderização segura (sem innerHTML com dados externos)
 // --------------------------------------------------------------------------
+
+function renderAccountStatus(profile) {
+  if (!profile) {
+    els.accountStatus.classList.add("hidden");
+    return;
+  }
+
+  els.accountStatus.classList.remove("hidden", "pro", "dev");
+
+  if (profile.role === "developer") {
+    els.accountStatus.textContent = "Conta Pro / Dev Ativa";
+    els.accountStatus.classList.add("dev");
+  } else if (profile.pro_access) {
+    els.accountStatus.textContent = "Conta Pro / Dev Ativa";
+    els.accountStatus.classList.add("pro");
+  } else {
+    els.accountStatus.classList.add("hidden");
+  }
+}
 
 function renderTrial(trial) {
   if (!trial) return;
@@ -249,11 +283,70 @@ async function loadInitialTrialStatus() {
 }
 
 // --------------------------------------------------------------------------
+// Fase 2: sessão (token guardado em chrome.storage.local, escopo da extensão)
+// --------------------------------------------------------------------------
+
+async function getStoredToken() {
+  const stored = await chrome.storage.local.get("authToken");
+  return stored?.authToken || null;
+}
+
+async function loadAccountStatus() {
+  const token = await getStoredToken();
+  if (!token) {
+    renderAccountStatus(null);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/api/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) {
+      renderAccountStatus(null);
+      return;
+    }
+    const profile = await response.json();
+    renderAccountStatus(profile);
+  } catch (_) {
+    renderAccountStatus(null);
+  }
+}
+
+async function handleMiniLogin() {
+  els.miniLoginError.classList.add("hidden");
+  const email = els.miniLoginEmail.value.trim();
+  const password = els.miniLoginPassword.value;
+
+  if (!email || !password) {
+    els.miniLoginError.textContent = "Preencha e-mail e senha.";
+    els.miniLoginError.classList.remove("hidden");
+    return;
+  }
+
+  try {
+    const data = await apiPost("/api/login", { email, password });
+    await chrome.storage.local.set({ authToken: data.token });
+    els.miniLoginPassword.value = "";
+    renderAccountStatus(data);
+  } catch (err) {
+    els.miniLoginError.textContent = err.message || "Falha no login.";
+    els.miniLoginError.classList.remove("hidden");
+  }
+}
+
+function handleOpenFullPanel() {
+  chrome.tabs.create({ url: DASHBOARD_URL });
+}
+
+// --------------------------------------------------------------------------
 // Inicialização
 // --------------------------------------------------------------------------
 
 els.btnAnalyzeSite.addEventListener("click", handleAnalyzeSite);
 els.btnAnalyzeHistory.addEventListener("click", handleAnalyzeHistory);
+els.btnFullPanel.addEventListener("click", handleOpenFullPanel);
+els.btnMiniLogin.addEventListener("click", handleMiniLogin);
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -265,6 +358,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // storage indisponível, segue com padrão
   }
   loadInitialTrialStatus();
+  loadAccountStatus();
 });
 
 els.modeSelect.addEventListener("change", () => {
